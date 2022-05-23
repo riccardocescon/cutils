@@ -1,5 +1,6 @@
 #include <string.h>
 #include "cutils.h"
+#include <stdarg.h>
 
 /**
  * @brief Get the Pointer Data Length size
@@ -145,4 +146,39 @@ bool substring(char* source, char* dest, char regex, bool saveRegex){
  */
 bool substringNClear(char* source, char* dest, int destMallocSize, char regex, bool saveRegex){
     return substringLenNClear(source, getPointerDataLen(source), dest, destMallocSize, regex, saveRegex);
+}
+
+void toJson(char* buffer, int dataAmount, ...){
+
+    if(dataAmount % 2 != 0){
+        return;
+    }
+
+    va_list valist;
+    va_start(valist, dataAmount);
+    int _freePos = 0;
+
+    memcpy(buffer, "{", 1);
+    _freePos = 1;
+
+    for(int i = 0; i < dataAmount; i += 2){
+        char* _name = va_arg(valist, char*);
+        char* _value = va_arg(valist, char*);
+        memcpy(buffer + _freePos, "\"", 1);
+        _freePos++;
+        memcpy(buffer + _freePos, _name, strlen(_name));
+        _freePos += strlen(_name);
+        memcpy(buffer + _freePos, "\":\"", 3);
+        _freePos += 3;
+        memcpy(buffer + _freePos, _value, strlen(_value));
+        _freePos += strlen(_value);
+        memcpy(buffer + _freePos, "\"", 1);
+        _freePos++;
+        if(i + 2 < dataAmount){
+            memcpy(buffer + _freePos, ",", 1);
+            _freePos++;
+        }
+    }
+
+    memcpy(buffer + _freePos, "}\0", 2);
 }

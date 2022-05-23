@@ -109,5 +109,5 @@ bool substringLen(char* source, int sourceLen, char* dest, char regex, bool save
  */
 bool substringLenNClear(char* source, int sourceLen, char* dest, int destMallocSize, char regex, bool saveRegex);
 
-
+void toJson(char* buffer, int dataAmount, ...);
 

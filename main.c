@@ -4,13 +4,28 @@
 
 void _splitFirstExample();
 void _substringExample();
+void _dataToJson();
 
 int main(int argc, char const *argv[])
 {
     // Uncomment the method in order to run the example
     // _splitFirstExample();
     // _substringExample();
+    // _dataToJson();
     return 0;
+}
+
+void _dataToJson(){
+    char* _name1 = "name\0";
+    char* _value1 = "Mark\0";
+    char* _name2 = "surname\0";
+    char* _value2 = "John\0";
+    char* _name3 = "age\0";
+    char* _value3 = "38\0";
+    char* _json = malloc(100);
+    toJson(_json, 6, _name1, _value1, _name2, _value2, _name3, _value3);
+    printf("\n%s", _json);
+    free(_json);
 }
 
 void _splitFirstExample(){
